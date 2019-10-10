@@ -47,6 +47,7 @@ class FeFET:
                 # print(flip)
                 if (flip <= prob):
                     self.pos_nuc_states[i] = False
+                break #should this be here?
 
         self.hvt = any(self.pos_nuc_states)
 
@@ -55,7 +56,7 @@ class FeFET:
         return self.hvt
 
     def sample_pos_nuc_count(self) -> int:
-        return 10
+        return 20
 
     def sample_neg_nuc_count(self) -> int:
         return 10
