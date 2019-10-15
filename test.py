@@ -5,6 +5,7 @@ import scipy
 import random
 import matplotlib.pyplot as plt
 from scipy import stats
+import scipy.integrate as integrate
 
 fefet1 = FeFET("fefet1")
 
@@ -23,6 +24,20 @@ for t in range(4):
 plt.hist(counts, bins = 50)
 plt.show()
 
+lam = fefet1.lam_not * math.exp(fefet1.pol_coef / \
+    (scipy.constants.Boltzmann * 300))
+
+def sim_dist(t, fet):
+    return ((1-math.exp(-1*lam*t))**fet.pos_nuc_count)
+
+time = np.linspace(0, 1, 10000)
+prob = []
+for t in time:
+    prob.append(sim_dist(t, fefet1))
+
+plt.plot(time, prob)
+plt.show()
+
 logmeans = []
 logvars = []
 for count in counts:
@@ -38,9 +53,6 @@ print(n)
 slope, intercept, r_value, p_value, std_err = stats.linregress(lm, lv)
 print(slope)
 
-lam = fefet1.lam_not * math.exp(fefet1.pol_coef / \
-    (scipy.constants.Boltzmann * 300))
-
 us_ex = []
 vars_ex = []
 for t in ts:
@@ -53,12 +65,20 @@ for count in counts:
     us.append((sum(count)/len(count)))
     vars.append((np.var(count)))
 
-print("Expected Means")
+tot_tim_sim = integrate.quad(lambda x: x*sim_dist(x, fefet1), 0, 1000000)[0]/1000000
+print(tot_tim_sim)
+us_sim = []
+for t in ts:
+    us_sim.append(tot_tim_sim / t)
+
+print("Expected Means (Seq)")
 print(us_ex)
+print("Expected Means (Sim)")
+print(us_sim)
 print("Actual Means")
 print(us)
 
-print("Expected Vars")
+print("Expected Vars (Seq)")
 print(vars_ex)
 print("Actual Vars")
 print(vars)
