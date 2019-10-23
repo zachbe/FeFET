@@ -7,7 +7,9 @@ import matplotlib.pyplot as plt
 from scipy import stats
 import scipy.integrate as integrate
 
-fefet1 = FeFET("fefet1")
+fefet1 = FeFET("fefet1", homog = False)
+
+print(fefet1.pos_nuc_sites)
 
 counts = [[], [], [], []]
 ts = [0.01, 0.02, 0.03, 0.04]

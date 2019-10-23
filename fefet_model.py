@@ -21,6 +21,9 @@ class FeFET:
         """Generate polatization coefficient"""
         self.pol_coef = self.get_pol_coef()
 
+        # """Generate oxide capacitance"""
+        # self.Ctot = self.get_Ctot()
+
         """Other variables; True = HVT, False = LVT"""
         self.hvt = True
         self.pos_nuc_states = [True]*self.pos_nuc_count
@@ -35,6 +38,7 @@ class FeFET:
 
         #calculate E
         E = 1
+        # E = (1/2) * self.Ctot * (voltage**2)
 
         for i in range(self.pos_nuc_count):
             if(self.pos_nuc_states[i]):
@@ -56,19 +60,35 @@ class FeFET:
         return self.hvt
 
     def sample_pos_nuc_count(self) -> int:
+        #return max(1, math.floor(np.random.normal(5, 1)))
         return 10
 
     def sample_neg_nuc_count(self) -> int:
+        #return max(1, math.floor(np.random.normal(5, 1)))
         return 10
 
     def sample_pos_sites(self, count, homog) -> int:
+        # if(homog):
+        #     return [max(1, math.floor(np.random.normal(1, 1)))]*count
+        # sites = []
+        # for i in range(count):
+        #     sites.append(max(1, math.floor(np.random.normal(1, 1))))
+        # return sites
         return [1]*count
 
     def sample_neg_sites(self, count, homog) -> int:
+        # if(homog):
+        #     return [max(1, math.floor(np.random.normal(1, 1)))]*count
+        # sites = []
+        # for i in range(count):
+        #     sites.append(max(1, math.floor(np.random.normal(1, 1))))
+        # return sites
         return [1]*count
 
     def sample_lam_not(self) -> int:
-        return 1
+        return 1 #not sure what this should be either
 
     def get_pol_coef(self) -> int:
-        return 0.00000000000000000001
+        return 0.00000000000000000001 #not sure what this should be
+
+    # def get_Ctot(self) -> int:
