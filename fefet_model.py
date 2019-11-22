@@ -61,11 +61,11 @@ class FeFET:
 
     def sample_pos_nuc_count(self) -> int:
         #return max(1, math.floor(np.random.normal(5, 1)))
-        return 10
+        return 5
 
     def sample_neg_nuc_count(self) -> int:
         #return max(1, math.floor(np.random.normal(5, 1)))
-        return 10
+        return 5
 
     def sample_pos_sites(self, count, homog) -> int:
         # if(homog):

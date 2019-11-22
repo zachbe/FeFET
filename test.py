@@ -30,7 +30,7 @@ lam = fefet1.lam_not * math.exp(fefet1.pol_coef / \
     (scipy.constants.Boltzmann * 300))
 
 def sim_dist(t, fet):
-    return 100*(lam*fet.pos_nuc_count*math.exp(-1*lam*t)*\
+    return (lam*fet.pos_nuc_count*math.exp(-1*lam*t)*\
             ((1-math.exp(-1*lam*t))**(fet.pos_nuc_count-1)))
 
 time = np.linspace(0, 1, 10000)
@@ -52,6 +52,7 @@ lm = np.array(logmeans)
 logn = np.mean(2*lm - lv)
 n = (10**logn)
 print(n)
+print((137/60)**2/(5269/3600))
 
 slope, intercept, r_value, p_value, std_err = stats.linregress(lm, lv)
 print(slope)
@@ -68,8 +69,9 @@ for count in counts:
     us.append((sum(count)/len(count)))
     vars.append((np.var(count)))
 
-tot_tim_sim = integrate.quad(lambda x: x*sim_dist(x, fefet1), 0, 100)[0]/100
-# print(tot_tim_sim)
+tot_tim_sim = integrate.quad(lambda x: x*sim_dist(x, fefet1), 0, 100)[0]
+print(5/lam - 10/(2*lam) + 10/(3*lam) - 5/(4*lam) + 1/(5*lam))
+print(tot_tim_sim)
 us_sim = []
 for t in ts:
     us_sim.append(tot_tim_sim / t)
