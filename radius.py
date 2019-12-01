@@ -7,20 +7,19 @@ import matplotlib.pyplot as plt
 from scipy import stats
 import scipy.integrate as integrate
 
-#average conc si: 1
 gamma = -1
 c = 1
 conc_si_avg = 1
 E = 1
 r_max = -gamma / (c * conc_si_avg * E)
 
-n = 1500
+n = 1250
 conc_si_avg_list = [conc_si_avg]*n
 conc_si_list = [conc_si_avg]*n #temp
 for i in range(0, 500):
-    conc_si_list[i] += 2
+    conc_si_list[i] += 1
 for i in range(500, 1000):
-    conc_si_list[i] -= 2
+    conc_si_list[i] -= 1
 deltag_avg = []
 deltag = []
 rs = []
@@ -31,7 +30,7 @@ for rad in range(1, n+1):
                         gamma * (8 * math.pi * r))
 
     sofar = conc_si_list[0:rad]
-    avgsofar = sum(sofar)/len(sofar)
+    avgsofar = sum(sofar)/len(sofar) #is this how this should work?
     deltag.append((2 * c * avgsofar * E) * (4 * math.pi * r**2) +\
                         gamma * (8 * math.pi * r))
 
