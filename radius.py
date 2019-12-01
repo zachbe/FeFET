@@ -17,21 +17,26 @@ n = 1250
 conc_si_avg_list = [conc_si_avg]*n
 conc_si_list = [conc_si_avg]*n #temp
 for i in range(0, 500):
-    conc_si_list[i] += 1
+    conc_si_list[i] += 7
 for i in range(500, 1000):
     conc_si_list[i] -= 1
 deltag_avg = []
 deltag = []
 rs = []
+curr_avg = 0
 for rad in range(1, n+1):
     r = rad/1000
     rs.append(r)
     deltag_avg.append((2 * c * conc_si_avg * E) * (4 * math.pi * r**2) +\
                         gamma * (8 * math.pi * r))
 
-    sofar = conc_si_list[0:rad]
-    avgsofar = sum(sofar)/len(sofar) #is this how this should work?
-    deltag.append((2 * c * avgsofar * E) * (4 * math.pi * r**2) +\
+    oldball = (4/3) * math.pi * ((rad-1)/1000)**3
+    newball = (4/3) * math.pi * (r)**3
+    newv = newball - oldball
+    curr_avg = (oldball * curr_avg + newv * conc_si_list[rad-1])/(newball)
+    print(curr_avg)
+    #avgsofar = sum(sofar)/len(sofar) #is this how this should work?
+    deltag.append((2 * c * curr_avg * E) * (4 * math.pi * r**2) +\
                         gamma * (8 * math.pi * r))
 
 
